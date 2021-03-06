@@ -17,3 +17,7 @@ todo
 vscode 安装 [drawio 插件](https://marketplace.visualstudio.com/items?itemName=eightHundreds.vscode-drawio)后，点击查看`documents`目录下各个版本的原型。
 
 [1.0.0 版本]('./documents/1.0.0/prototype.drawio')
+
+# License
+
+MIT License.
