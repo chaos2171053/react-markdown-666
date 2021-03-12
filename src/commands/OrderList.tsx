@@ -23,5 +23,6 @@ const OrderListSvg = () => {
 export const OrderList: ICommand = {
   name: "OrderList",
   keyCommand: "OrderList",
+  tips: "Order List",
   icon: OrderListSvg,
 };

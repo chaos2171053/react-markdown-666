@@ -19,6 +19,7 @@ const HorizontalLineSvg = () => {
 
 export const HorizontalLine: ICommand = {
   name: "HorizontalLine",
+  tips: "Horizonta lLine",
   keyCommand: "HorizontalLine",
   icon: HorizontalLineSvg,
 };

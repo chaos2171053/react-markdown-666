@@ -27,5 +27,6 @@ const ImageBlockSvg = () => {
 export const ImageBlock: ICommand = {
   name: "ImageBlock",
   keyCommand: "ImageBlock",
+  tips: "Image Block",
   icon: ImageBlockSvg,
 };

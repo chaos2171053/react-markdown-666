@@ -23,5 +23,6 @@ const ItalicSvg = () => {
 export const Italic: ICommand = {
   name: "Italic",
   keyCommand: "Italic",
+  tips: "Italic",
   icon: ItalicSvg,
 };

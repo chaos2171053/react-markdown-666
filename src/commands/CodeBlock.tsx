@@ -23,5 +23,6 @@ const CodeBlockSvg = () => {
 export const CodeBlock: ICommand = {
   name: "CodeBlock",
   keyCommand: "CodeBlock",
+  tips: "Code Block",
   icon: CodeBlockSvg,
 };

@@ -23,5 +23,6 @@ const LinkBlockSvg = () => {
 export const LinkBlock: ICommand = {
   name: "LinkBlock",
   keyCommand: "LinkBlock",
+  tips: "Link Block",
   icon: LinkBlockSvg,
 };

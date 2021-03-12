@@ -23,5 +23,6 @@ const BoldSvg = () => {
 export const Bold: ICommand = {
   name: "Bold",
   keyCommand: "Bold",
+  tips: "Bold",
   icon: BoldSvg,
 };

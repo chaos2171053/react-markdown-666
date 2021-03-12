@@ -23,5 +23,6 @@ const Heading1Svg = () => {
 export const Heading1: ICommand = {
   name: "Heading1",
   keyCommand: "Heading1",
+  tips: "Heading1",
   icon: Heading1Svg,
 };

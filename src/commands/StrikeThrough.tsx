@@ -23,5 +23,6 @@ const StrikeThroughSvg = () => {
 export const StrikeThrough: ICommand = {
   name: "StrikeThrough",
   keyCommand: "StrikeThrough",
+  tips: "Strike Through",
   icon: StrikeThroughSvg,
 };

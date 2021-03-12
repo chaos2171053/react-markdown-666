@@ -11,27 +11,33 @@ import { OrderList } from "./OrderList";
 import { NoOrderList } from "./NoOrderList";
 import { FullScreen } from "./FullScreen";
 import { LinkBlock } from "./LinkBlock";
+import { Divider } from "./Divider";
 // svg source https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=28649
 
 export type ICommand<T = String> = {
   keyCommand?: string;
   name?: string;
-  icon: () => React.ReactElement;
+  icon: (arg0?: any) => React.ReactElement;
+  tips?: string;
 };
 
 const getCommands = () => [
   Heading1,
   Heading2,
   Heading3,
+  Divider,
   Bold,
   Italic,
   StrikeThrough,
   HorizontalLine,
+  Divider,
   CodeBlock,
   ImageBlock,
+  Divider,
   OrderList,
   NoOrderList,
   LinkBlock,
+  Divider,
   FullScreen,
 ];
 export { getCommands };

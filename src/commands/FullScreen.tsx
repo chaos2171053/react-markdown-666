@@ -23,5 +23,6 @@ const FullScreenSvg = () => {
 export const FullScreen: ICommand = {
   name: "FullScreen",
   keyCommand: "FullScreen",
+  tips: "Full Screen",
   icon: FullScreenSvg,
 };

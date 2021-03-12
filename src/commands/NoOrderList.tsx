@@ -43,5 +43,6 @@ const NoOrderListSvg = () => {
 export const NoOrderList: ICommand = {
   name: "NoOrderList",
   keyCommand: "NoOrderList",
+  tips: "No Order List",
   icon: NoOrderListSvg,
 };

@@ -1,7 +1,42 @@
 @import '../styles/variables.less';
-.@{pre-fix-cls}{
+
+.@{pre-fix-cls} {
   &-toolbar {
     display: flex;
     flex-direction: row;
+    &-ul {
+      display: flex;
+      flex-direction: row;
+    }
+    &-button{
+      border: none;
+      height: 20px;
+      line-height: 14px;
+      background: none;
+      color: #586069;
+      padding: 4px;
+      margin: 0 1px;
+      border-radius: 2px;
+      text-transform: none;
+      font-weight: normal;
+      overflow: visible;
+      outline: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      :hover{
+        background-color: #e9e9e9;
+      }
+    }
+    &-devider-wrapper{
+      box-sizing: border-box;
+      width: 1px;
+      height: 100%;
+      padding: 5px 0;
+    }
+    &-divider {
+      height: 100%;
+      width: 100%;
+      background-color: #ccc;
+    }
   }
 }
