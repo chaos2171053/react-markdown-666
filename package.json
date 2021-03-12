@@ -1,5 +1,5 @@
 {
-  "name": "react-markdown-666",
+  "name": "react-markdown-editor-666",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -59,7 +59,10 @@
     "react-app-polyfill": "^2.0.0",
     "react-dev-utils": "^11.0.3",
     "react-dom": "^17.0.1",
+    "react-markdown": "^5.0.3",
     "react-refresh": "^0.8.3",
+    "react-syntax-highlighter": "^15.4.3",
+    "remark-gfm": "^1.0.0",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
     "sass-loader": "^10.0.5",
@@ -157,6 +160,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.11",
+    "@types/react-syntax-highlighter": "^13.5.0",
     "less": "^4.1.1"
   }
 }
