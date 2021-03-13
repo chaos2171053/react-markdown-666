@@ -1,23 +1,46 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 
 export interface IContent
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   value?: string;
   onValueChange?: Function;
   prefixCls: string;
+  // ref: React.MutableRefObject<null>;
+  autoFocus: boolean;
 }
 
-export default function Content(props: IContent) {
-  const { onValueChange, prefixCls, ...others } = props;
+export default forwardRef(function Content(props: IContent, ref) {
+  const { onValueChange, prefixCls, autoFocus, ...others } = props;
   const [value, setValue] = useState(props.value);
+
+  const textareaRef = useRef(null);
+
   const onContentValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = e.target.value;
     setValue(newVal);
     onValueChange && onValueChange(newVal);
   };
+  useEffect(() => {
+    if (autoFocus && textareaRef.current) {
+      (textareaRef as any).current.focus();
+    }
+    return () => {};
+  }, [autoFocus]);
+
+  useImperativeHandle(ref, () => ({
+    textareaRef: textareaRef.current,
+  }));
+
   return (
     <div className={prefixCls}>
       <textarea
+        ref={textareaRef}
         className={`${prefixCls}-input`}
         value={value}
         onChange={onContentValueChange}
@@ -25,4 +48,4 @@ export default function Content(props: IContent) {
       />
     </div>
   );
-}
+});
