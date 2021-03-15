@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "Italic";
 const ItalicSvg = () => {
   return (
     <svg
@@ -20,9 +21,19 @@ const ItalicSvg = () => {
   );
 };
 
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "*";
+  const suffix = "*";
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+  });
+};
+
 export const Italic: ICommand = {
-  name: "Italic",
-  keyCommand: "Italic",
-  tips: "Italic",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: ItalicSvg,
+  execute,
 };

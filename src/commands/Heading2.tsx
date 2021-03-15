@@ -22,11 +22,11 @@ const Heading2Svg = () => {
 const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
   const prefix = "## ";
   const suffix = "";
-  const templateStr = commandName;
+  const str = commandName;
   textareaIncetance.insertText({
     prefix,
     suffix,
-    templateStr,
+    str,
   });
 };
 export const Heading2: ICommand = {

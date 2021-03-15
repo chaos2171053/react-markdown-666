@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "CodeBlock";
+
 const CodeBlockSvg = () => {
   return (
     <svg
@@ -20,9 +22,19 @@ const CodeBlockSvg = () => {
   );
 };
 
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "```\n";
+  const suffix = "\n```";
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+  });
+};
+
 export const CodeBlock: ICommand = {
-  name: "CodeBlock",
-  keyCommand: "CodeBlock",
-  tips: "Code Block",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: CodeBlockSvg,
+  execute,
 };

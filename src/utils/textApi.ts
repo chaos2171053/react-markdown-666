@@ -12,12 +12,12 @@ export default class TextApi implements ITextApi {
   }
   insertText({
     prefix = "",
-    templateStr = "",
+    str = "",
     suffix = "",
   }: {
     prefix?: string;
     suffix?: string;
-    templateStr?: string;
+    str?: string;
   }) {
     const textareaIncetance = this.textareaIncetance;
     const value = textareaIncetance?.value || "";
@@ -31,11 +31,11 @@ export default class TextApi implements ITextApi {
       textareaIncetance.value =
         value?.substring(0, start) +
         prefix +
-        templateStr +
+        str +
         suffix +
         value?.substring(end, value.length);
       textareaIncetance.selectionStart = start + prefix.length;
-      textareaIncetance.selectionEnd = end + prefix.length + templateStr.length;
+      textareaIncetance.selectionEnd = end + prefix.length + str.length;
     } else {
       textareaIncetance.value =
         value.substring(0, start) +

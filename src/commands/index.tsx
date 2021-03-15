@@ -14,7 +14,7 @@ import { LinkBlock } from "./LinkBlock";
 import { Divider } from "./Divider";
 // svg source https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=28649
 
-export type ICommand<T = String> = {
+export type ICommand = {
   keyCommand?: string;
   name?: string;
   icon: (arg0?: any) => React.ReactElement;

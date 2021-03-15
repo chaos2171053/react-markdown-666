@@ -10,11 +10,21 @@ export interface IContentPreview {
   value?: string;
 }
 
-const CodeBlock = ({ language, value }: any) => (
+const CodeBlockRenderer = ({ language, value }: any) => (
   <SyntaxHighlighter language={language} style={codeStyle}>
     {value || ""}
   </SyntaxHighlighter>
 );
+
+// use rel="noreferrer"
+// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md
+function LinkRenderer(props: any) {
+  return (
+    <a href={props.href} target="_blank" rel="noreferrer">
+      {props.children}
+    </a>
+  );
+}
 
 export default function ContentPreview(props: any) {
   const { value, ...others } = props;
@@ -23,7 +33,7 @@ export default function ContentPreview(props: any) {
       <ReactMarkdown
         plugins={[gfm]}
         children={value || ""}
-        renderers={{ code: CodeBlock }}
+        renderers={{ code: CodeBlockRenderer, link: LinkRenderer }}
       />
     </div>
   );

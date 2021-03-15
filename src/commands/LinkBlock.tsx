@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "LinkBlock";
+
 const LinkBlockSvg = () => {
   return (
     <svg
@@ -20,9 +22,19 @@ const LinkBlockSvg = () => {
   );
 };
 
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "[](https://example.com)";
+  const suffix = "";
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+  });
+};
+
 export const LinkBlock: ICommand = {
-  name: "LinkBlock",
-  keyCommand: "LinkBlock",
-  tips: "Link Block",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: LinkBlockSvg,
+  execute,
 };

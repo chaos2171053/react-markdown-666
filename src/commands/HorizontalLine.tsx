@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "HorizontalLine";
+
 const HorizontalLineSvg = () => {
   return (
     <svg
@@ -17,9 +19,19 @@ const HorizontalLineSvg = () => {
   );
 };
 
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "\n------";
+  const suffix = "\n";
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+  });
+};
+
 export const HorizontalLine: ICommand = {
-  name: "HorizontalLine",
-  tips: "Horizonta lLine",
-  keyCommand: "HorizontalLine",
+  name: commandName,
+  tips: commandName,
+  keyCommand: commandName,
   icon: HorizontalLineSvg,
+  execute,
 };

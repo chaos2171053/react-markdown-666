@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "HorizontalLine";
+
 const ImageBlockSvg = () => {
   return (
     <svg
@@ -24,9 +26,19 @@ const ImageBlockSvg = () => {
   );
 };
 
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "![](https://example.com/image-url.png)";
+  const suffix = "";
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+  });
+};
+
 export const ImageBlock: ICommand = {
-  name: "ImageBlock",
-  keyCommand: "ImageBlock",
-  tips: "Image Block",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: ImageBlockSvg,
+  execute,
 };
