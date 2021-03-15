@@ -12,12 +12,12 @@ export default class TextApi implements ITextApi {
   }
   insertText({
     prefix = "",
-    str = "",
+    templateStr = "",
     suffix = "",
   }: {
     prefix?: string;
     suffix?: string;
-    str?: string;
+    templateStr?: string;
   }) {
     const textareaIncetance = this.textareaIncetance;
     const value = textareaIncetance?.value || "";
@@ -26,15 +26,16 @@ export default class TextApi implements ITextApi {
     if (!textareaIncetance) {
       return;
     }
+    // no select text
     if (start === end) {
       textareaIncetance.value =
         value?.substring(0, start) +
         prefix +
-        str +
+        templateStr +
         suffix +
         value?.substring(end, value.length);
       textareaIncetance.selectionStart = start + prefix.length;
-      textareaIncetance.selectionEnd = end + prefix.length + str.length;
+      textareaIncetance.selectionEnd = end + prefix.length + templateStr.length;
     } else {
       textareaIncetance.value =
         value.substring(0, start) +
@@ -42,9 +43,11 @@ export default class TextApi implements ITextApi {
         value.substring(start, end) +
         suffix +
         value.substring(end, value.length);
+      // TODO must tap space?
       textareaIncetance.selectionStart = start + prefix.length;
       textareaIncetance.selectionEnd = end + prefix.length;
     }
+    // TODO fix focus not working
     textareaIncetance.focus();
   }
 }

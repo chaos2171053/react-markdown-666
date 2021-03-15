@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "Heading1";
 const Heading1Svg = () => {
   return (
     <svg
@@ -19,10 +20,20 @@ const Heading1Svg = () => {
     </svg>
   );
 };
-
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "# ";
+  const suffix = "";
+  const templateStr = commandName;
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+    templateStr,
+  });
+};
 export const Heading1: ICommand = {
-  name: "Heading1",
-  keyCommand: "Heading1",
-  tips: "Heading1",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: Heading1Svg,
+  execute,
 };

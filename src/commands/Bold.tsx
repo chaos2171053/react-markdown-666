@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ICommand } from "./";
 
+const commandName = "Bold";
+
 const BoldSvg = () => {
   return (
     <svg
@@ -30,9 +32,9 @@ const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
 };
 
 export const Bold: ICommand = {
-  name: "Bold",
-  keyCommand: "Bold",
-  tips: "Bold",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: BoldSvg,
   execute,
 };
