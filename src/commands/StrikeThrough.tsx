@@ -1,6 +1,8 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
+const commandName = "StrikeThroug";
 const StrikeThroughSvg = () => {
   return (
     <svg
@@ -20,9 +22,21 @@ const StrikeThroughSvg = () => {
   );
 };
 
+const execute = (textApi: ITextApi) => {
+  const prefix = "~~";
+  const suffix = "~~";
+  const str = "StrikeThrough";
+  textApi.insertText({
+    prefix,
+    suffix,
+    str,
+  });
+};
+
 export const StrikeThrough: ICommand = {
-  name: "StrikeThrough",
-  keyCommand: "StrikeThrough",
-  tips: "Strike Through",
+  name: commandName,
+  keyCommand: commandName,
+  tips: commandName,
   icon: StrikeThroughSvg,
+  execute,
 };

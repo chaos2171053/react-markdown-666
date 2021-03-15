@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const commandName = "Heading1";
@@ -20,11 +21,11 @@ const Heading1Svg = () => {
     </svg>
   );
 };
-const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+const execute = (textApi: ITextApi) => {
   const prefix = "# ";
   const suffix = "";
   const str = commandName;
-  textareaIncetance.insertText({
+  textApi.insertText({
     prefix,
     suffix,
     str,

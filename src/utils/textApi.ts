@@ -14,19 +14,22 @@ export default class TextApi implements ITextApi {
     prefix = "",
     str = "",
     suffix = "",
+    callback,
   }: {
     prefix?: string;
     suffix?: string;
     str?: string;
+    callback?: Function;
   }) {
     const textareaIncetance = this.textareaIncetance;
     const value = textareaIncetance?.value || "";
     const start = textareaIncetance?.selectionStart || 0;
     const end = textareaIncetance?.selectionEnd || 0;
+
     if (!textareaIncetance) {
       return;
     }
-    // no select text
+
     if (start === end) {
       textareaIncetance.value =
         value?.substring(0, start) +
@@ -43,11 +46,13 @@ export default class TextApi implements ITextApi {
         value.substring(start, end) +
         suffix +
         value.substring(end, value.length);
-      // TODO must tap space?
       textareaIncetance.selectionStart = start + prefix.length;
-      textareaIncetance.selectionEnd = end + prefix.length;
+      textareaIncetance.selectionEnd = str.length + prefix.length + end;
     }
-    // TODO fix focus not working
+
+    // TODO fix focus not working,because setSate is a asynchronous method.
     textareaIncetance.focus();
+
+    callback && callback();
   }
 }

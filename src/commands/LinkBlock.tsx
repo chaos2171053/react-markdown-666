@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const commandName = "LinkBlock";
@@ -22,10 +23,10 @@ const LinkBlockSvg = () => {
   );
 };
 
-const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+const execute = (textApi: ITextApi) => {
   const prefix = "[](https://example.com)";
   const suffix = "";
-  textareaIncetance.insertText({
+  textApi.insertText({
     prefix,
     suffix,
   });

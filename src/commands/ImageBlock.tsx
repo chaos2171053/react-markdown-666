@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const commandName = "HorizontalLine";
@@ -26,10 +27,10 @@ const ImageBlockSvg = () => {
   );
 };
 
-const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+const execute = (textApi: ITextApi) => {
   const prefix = "![](https://example.com/image-url.png)";
   const suffix = "";
-  textareaIncetance.insertText({
+  textApi.insertText({
     prefix,
     suffix,
   });

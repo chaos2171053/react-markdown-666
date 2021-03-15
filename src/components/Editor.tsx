@@ -30,7 +30,7 @@ export default function Editor(props: EditorProps) {
   const [value, setValue] = useState(props.value || "");
 
   const textareaRef = useRef(null);
-  const textareaIncetance = useRef(null);
+  const textareaIncetance: any = useRef(null);
 
   const onTextareaChange = (newVal: string) => {
     setValue(newVal);
@@ -39,8 +39,11 @@ export default function Editor(props: EditorProps) {
 
   const clsStr = classnames(className, prefixCls);
   const onCommandClick = (command: ICommand) => {
-    command.execute &&
-      command.execute({ textareaIncetance: textareaIncetance.current });
+    let instance = null;
+    if (textareaIncetance && textareaIncetance.current) {
+      instance = textareaIncetance?.current;
+    }
+    instance && command.execute && command.execute(instance);
   };
 
   useEffect(() => {

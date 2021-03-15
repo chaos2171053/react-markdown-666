@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const commandName = "HorizontalLine";
@@ -19,10 +20,10 @@ const HorizontalLineSvg = () => {
   );
 };
 
-const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+const execute = (textApi: ITextApi) => {
   const prefix = "\n------";
   const suffix = "\n";
-  textareaIncetance.insertText({
+  textApi.insertText({
     prefix,
     suffix,
   });

@@ -1,6 +1,8 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
+const commandName = "NoOrderList";
 const NoOrderListSvg = () => {
   return (
     <svg
@@ -40,9 +42,28 @@ const NoOrderListSvg = () => {
   );
 };
 
+const execute = (textApi: ITextApi) => {
+  const instatnce = textApi.textareaIncetance;
+  const start = instatnce?.selectionStart || 0;
+  const end = instatnce?.selectionEnd || 0;
+  const textareaVal = instatnce?.value.slice(start, end) || "";
+  const lines = textareaVal.split(/\n/);
+  let str = "";
+  str = lines
+    .map((line) => {
+      return (line = `- ${line}\n`);
+    })
+    .join("");
+  console.log("str :", str);
+  textApi.insertText({
+    str,
+  });
+};
+
 export const NoOrderList: ICommand = {
-  name: "NoOrderList",
-  keyCommand: "NoOrderList",
+  name: commandName,
+  keyCommand: commandName,
   tips: "No Order List",
   icon: NoOrderListSvg,
+  execute,
 };

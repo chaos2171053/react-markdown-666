@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const commandName = "Italic";
@@ -21,10 +22,10 @@ const ItalicSvg = () => {
   );
 };
 
-const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+const execute = (textApi: ITextApi) => {
   const prefix = "*";
   const suffix = "*";
-  textareaIncetance.insertText({
+  textApi.insertText({
     prefix,
     suffix,
   });
