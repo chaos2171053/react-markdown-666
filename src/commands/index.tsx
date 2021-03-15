@@ -19,6 +19,7 @@ export type ICommand<T = String> = {
   name?: string;
   icon: (arg0?: any) => React.ReactElement;
   tips?: string;
+  execute?: ({ textareaIncetance }: { textareaIncetance: any }) => void;
 };
 
 const getCommands = () => [

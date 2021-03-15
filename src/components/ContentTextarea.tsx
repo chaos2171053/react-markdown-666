@@ -34,7 +34,7 @@ export default forwardRef(function Content(props: IContent, ref) {
   }, [autoFocus]);
 
   useImperativeHandle(ref, () => ({
-    textareaRef: textareaRef.current,
+    instance: textareaRef.current,
   }));
 
   return (

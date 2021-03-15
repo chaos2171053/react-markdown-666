@@ -20,9 +20,19 @@ const BoldSvg = () => {
   );
 };
 
+const execute = ({ textareaIncetance }: { textareaIncetance: any }) => {
+  const prefix = "**";
+  const suffix = "**";
+  textareaIncetance.insertText({
+    prefix,
+    suffix,
+  });
+};
+
 export const Bold: ICommand = {
   name: "Bold",
   keyCommand: "Bold",
   tips: "Bold",
   icon: BoldSvg,
+  execute,
 };

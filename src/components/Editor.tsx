@@ -5,6 +5,7 @@ import ContentTextarea from "./ContentTextarea";
 import ContentPreview from "./ContentPreview";
 import "./Editor.less";
 import { getCommands, ICommand } from "../commands";
+import { TextApi } from "../utils";
 
 export interface EditorProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -29,6 +30,7 @@ export default function Editor(props: EditorProps) {
   const [value, setValue] = useState(props.value || "");
 
   const textareaRef = useRef(null);
+  const textareaIncetance = useRef(null);
 
   const onTextareaChange = (newVal: string) => {
     setValue(newVal);
@@ -37,11 +39,14 @@ export default function Editor(props: EditorProps) {
 
   const clsStr = classnames(className, prefixCls);
   const onCommandClick = (command: ICommand) => {
-    console.log("onCommandClick: ", command);
+    command.execute &&
+      command.execute({ textareaIncetance: textareaIncetance.current });
   };
 
   useEffect(() => {
-    console.log("textareaRef :", textareaRef.current);
+    if (textareaRef.current) {
+      (textareaIncetance.current as any) = new TextApi(textareaRef.current);
+    }
     return () => {};
   }, []);
 
