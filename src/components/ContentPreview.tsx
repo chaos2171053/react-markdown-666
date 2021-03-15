@@ -12,7 +12,7 @@ export interface IContentPreview {
 
 const CodeBlock = ({ language, value }: any) => (
   <SyntaxHighlighter language={language} style={codeStyle}>
-    {value}
+    {value || ""}
   </SyntaxHighlighter>
 );
 
@@ -22,7 +22,7 @@ export default function ContentPreview(props: any) {
     <div {...others}>
       <ReactMarkdown
         plugins={[gfm]}
-        children={value}
+        children={value || ""}
         renderers={{ code: CodeBlock }}
       />
     </div>
