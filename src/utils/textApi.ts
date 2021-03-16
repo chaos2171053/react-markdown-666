@@ -37,6 +37,7 @@ export default class TextApi implements ITextApi {
     if (typeof beforeInsert === "function") {
       beforeInsert();
     }
+
     if (start === end) {
       textareaIncetance.value =
         value?.substring(0, start) +
@@ -46,22 +47,46 @@ export default class TextApi implements ITextApi {
         value?.substring(end, value.length);
       newSelectionStart = start + prefix.length;
       newSelectionEnd = +str.length + prefix.length + end;
-    } else {
-      textareaIncetance.value =
-        value.substring(0, start) +
-        prefix +
-        value.substring(start, end) +
-        suffix +
-        value.substring(end, value.length);
-      newSelectionStart = start + prefix.length;
-      newSelectionEnd = prefix.length + end;
-    }
-    setTimeout(() => {
-      textareaIncetance.setSelectionRange(newSelectionStart, newSelectionEnd);
       textareaIncetance.focus();
-      if (typeof afterInsert === "function") {
-        afterInsert();
+      textareaIncetance.setSelectionRange(newSelectionStart, newSelectionEnd);
+    } else {
+      if (prefix === "- ") {
+        this.handleNoOrderList();
+      } else {
+        textareaIncetance.value =
+          value.substring(0, start) +
+          prefix +
+          value.substring(start, end) +
+          suffix +
+          value.substring(end, value.length);
+        newSelectionStart = start + prefix.length;
+        newSelectionEnd = prefix.length + end;
+        textareaIncetance.focus();
+        textareaIncetance.setSelectionRange(newSelectionStart, newSelectionEnd);
       }
-    }, 300);
+    }
+
+    if (typeof afterInsert === "function") {
+      afterInsert();
+    }
+  }
+  handleNoOrderList() {
+    const textareaIncetance = this.textareaIncetance as HTMLTextAreaElement;
+    const value = textareaIncetance?.value || "";
+    const start = textareaIncetance?.selectionStart || 0;
+    const end = textareaIncetance?.selectionEnd || 0;
+    const valArr = value.slice(start, end).split("\n");
+
+    let newValArr = [];
+    let newVal = "";
+    newValArr = valArr.map((strLine) => {
+      strLine = "- " + strLine + "\n";
+      return strLine;
+    });
+    newVal = newValArr.join("");
+    textareaIncetance.value =
+      value.substring(0, start) + newVal + value.substring(end);
+    textareaIncetance.focus();
+    textareaIncetance.selectionStart = start + newVal.length;
   }
 }
