@@ -25,6 +25,8 @@ export default class TextApi implements ITextApi {
     const value = textareaIncetance?.value || "";
     const start = textareaIncetance?.selectionStart || 0;
     const end = textareaIncetance?.selectionEnd || 0;
+    let newSelectionStart = 0;
+    let newSelectionEnd = 0;
 
     if (!textareaIncetance) {
       return;
@@ -37,8 +39,11 @@ export default class TextApi implements ITextApi {
         str +
         suffix +
         value?.substring(end, value.length);
-      textareaIncetance.selectionStart = start + prefix.length;
-      textareaIncetance.selectionEnd = end + prefix.length + str.length;
+      setTimeout(() => {
+        newSelectionStart = start + prefix.length;
+        newSelectionEnd = end + prefix.length + str.length;
+        textareaIncetance.focus();
+      }, 300);
     } else {
       textareaIncetance.value =
         value.substring(0, start) +
@@ -46,13 +51,21 @@ export default class TextApi implements ITextApi {
         value.substring(start, end) +
         suffix +
         value.substring(end, value.length);
-      textareaIncetance.selectionStart = start + prefix.length;
-      textareaIncetance.selectionEnd = str.length + prefix.length + end;
+      setTimeout(() => {
+        newSelectionStart = start + prefix.length;
+        newSelectionEnd = str.length + prefix.length + end;
+        textareaIncetance.focus();
+      }, 300);
     }
 
-    // TODO fix focus not working,because setSate is a asynchronous method.
-    textareaIncetance.focus();
+    setTimeout(() => {
+      textareaIncetance.selectionStart = newSelectionStart;
+      textareaIncetance.selectionEnd = newSelectionEnd;
+      textareaIncetance.focus();
+    }, 300);
 
-    callback && callback();
+    if (typeof callback === "function") {
+      callback();
+    }
   }
 }
