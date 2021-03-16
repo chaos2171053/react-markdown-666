@@ -43,20 +43,26 @@ const NoOrderListSvg = () => {
 };
 
 const execute = (textApi: ITextApi) => {
-  const instatnce = textApi.textareaIncetance;
-  const start = instatnce?.selectionStart || 0;
-  const end = instatnce?.selectionEnd || 0;
-  const textareaVal = instatnce?.value.slice(start, end) || "";
-  const lines = textareaVal.split(/\n/);
-  let str = "";
-  str = lines
-    .map((line) => {
-      return (line = `- ${line}\n`);
-    })
-    .join("");
-  console.log("str :", str);
+  // const instatnce = textApi.textareaIncetance;
+  // const start = instatnce?.selectionStart || 0;
+  // const end = instatnce?.selectionEnd || 0;
+  // const textareaVal = instatnce?.value.slice(start, end) || "";
+  // const lines = textareaVal.split(/\n/);
+  // let str = "";
+  // str = lines
+  //   .map((line) => {
+  //     return (line = `- ${line}\n`);
+  //   })
+  //   .join("");
+  // console.log("str :", str);
+  // textApi.insertText({
+  //   str,
+  // });
+  const prefix = "- ";
+  const suffix = "\n";
   textApi.insertText({
-    str,
+    prefix,
+    suffix,
   });
 };
 

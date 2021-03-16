@@ -59,8 +59,7 @@ export default class TextApi implements ITextApi {
     }
 
     setTimeout(() => {
-      textareaIncetance.selectionStart = newSelectionStart;
-      textareaIncetance.selectionEnd = newSelectionEnd;
+      textareaIncetance.setSelectionRange(newSelectionStart, newSelectionEnd);
       textareaIncetance.focus();
     }, 300);
 
