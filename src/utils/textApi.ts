@@ -14,12 +14,14 @@ export default class TextApi implements ITextApi {
     prefix = "",
     str = "",
     suffix = "",
-    callback,
+    afterInsert,
+    beforeInsert,
   }: {
     prefix?: string;
     suffix?: string;
     str?: string;
-    callback?: Function;
+    afterInsert?: Function;
+    beforeInsert?: Function;
   }) {
     const textareaIncetance = this.textareaIncetance;
     const value = textareaIncetance?.value || "";
@@ -32,6 +34,9 @@ export default class TextApi implements ITextApi {
       return;
     }
 
+    if (typeof beforeInsert === "function") {
+      beforeInsert();
+    }
     if (start === end) {
       textareaIncetance.value =
         value?.substring(0, start) +
@@ -39,11 +44,8 @@ export default class TextApi implements ITextApi {
         str +
         suffix +
         value?.substring(end, value.length);
-      setTimeout(() => {
-        newSelectionStart = start + prefix.length;
-        newSelectionEnd = end + prefix.length + str.length;
-        textareaIncetance.focus();
-      }, 300);
+      newSelectionStart = start + prefix.length;
+      newSelectionEnd = +str.length + prefix.length + end;
     } else {
       textareaIncetance.value =
         value.substring(0, start) +
@@ -51,20 +53,15 @@ export default class TextApi implements ITextApi {
         value.substring(start, end) +
         suffix +
         value.substring(end, value.length);
-      setTimeout(() => {
-        newSelectionStart = start + prefix.length;
-        newSelectionEnd = str.length + prefix.length + end;
-        textareaIncetance.focus();
-      }, 300);
+      newSelectionStart = start + prefix.length;
+      newSelectionEnd = prefix.length + end;
     }
-
     setTimeout(() => {
       textareaIncetance.setSelectionRange(newSelectionStart, newSelectionEnd);
       textareaIncetance.focus();
+      if (typeof afterInsert === "function") {
+        afterInsert();
+      }
     }, 300);
-
-    if (typeof callback === "function") {
-      callback();
-    }
   }
 }

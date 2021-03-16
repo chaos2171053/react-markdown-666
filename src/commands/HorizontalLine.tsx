@@ -21,8 +21,8 @@ const HorizontalLineSvg = () => {
 };
 
 const execute = (textApi: ITextApi) => {
-  const prefix = "\n------";
-  const suffix = "\n";
+  const prefix = "\n***\n";
+  const suffix = "";
   textApi.insertText({
     prefix,
     suffix,

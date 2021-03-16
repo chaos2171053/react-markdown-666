@@ -13,10 +13,17 @@ export interface IContent
   prefixCls: string;
   // ref: React.MutableRefObject<null>;
   autoFocus: boolean;
+  onKeyDownHandler?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => {};
 }
 
 export default forwardRef(function Content(props: IContent, ref) {
-  const { onValueChange, prefixCls, autoFocus, ...others } = props;
+  const {
+    onValueChange,
+    prefixCls,
+    autoFocus,
+    onKeyDownHandler = () => {},
+    ...others
+  } = props;
   const [value, setValue] = useState(props.value);
 
   const textareaRef = useRef(null);
@@ -41,6 +48,7 @@ export default forwardRef(function Content(props: IContent, ref) {
     <div className={prefixCls}>
       <textarea
         ref={textareaRef}
+        onKeyDown={onKeyDownHandler}
         className={`${prefixCls}-input`}
         value={value}
         onChange={onContentValueChange}

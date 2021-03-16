@@ -6,6 +6,7 @@ import ContentPreview from "./ContentPreview";
 import "./Editor.less";
 import { getCommands, ICommand } from "../commands";
 import { TextApi } from "../utils";
+import hotKey from "../utils/hotKey";
 
 export interface EditorProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -46,6 +47,10 @@ export default function Editor(props: EditorProps) {
     instance && command.execute && command.execute(instance);
   };
 
+  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    hotKey(e);
+  };
+
   useEffect(() => {
     if (textareaRef.current) {
       (textareaIncetance.current as any) = new TextApi(textareaRef.current);
@@ -65,6 +70,7 @@ export default function Editor(props: EditorProps) {
           <ContentTextarea
             prefixCls={`${prefixCls}-textarea`}
             value={value}
+            onKeyDown={onKeyDownHandler}
             onValueChange={onTextareaChange}
             ref={textareaRef}
             autoFocus={autoFocus}
