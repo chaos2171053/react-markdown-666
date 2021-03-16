@@ -1,4 +1,5 @@
-import insertTextAtCursor from "insert-text-at-cursor";
+import { ItextareaIncetance } from "../components/Editor";
+
 const getKeycode = function (
   e: React.KeyboardEvent<HTMLTextAreaElement> | any
 ) {
@@ -19,7 +20,10 @@ function stopPropagation(e: React.KeyboardEvent<HTMLTextAreaElement>) {
   e.preventDefault();
 }
 
-export default function hotKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+export default function hotKey(
+  e: React.KeyboardEvent<HTMLTextAreaElement>,
+  textareaIncetance: ItextareaIncetance | null
+) {
   const keycode = getKeycode(e);
   const target = e.target as HTMLTextAreaElement;
   const starVal = target.value.substr(0, target.selectionStart);
@@ -30,7 +34,8 @@ export default function hotKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     // insert “no order list”
     if (/^-\s/.test(currentLineStr)) {
       stopPropagation(e);
-      insertTextAtCursor(target, `\n- `);
+      // Cannot invoke an object which is possibly 'undefined'
+      (textareaIncetance as any).setTextareaValue(starVal + `\n- `);
     }
   }
 }

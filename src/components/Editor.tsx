@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, MutableRefObject } from "react";
 import classnames from "classnames";
 import Toolbar from "./Toolbar";
 import ContentTextarea from "./ContentTextarea";
@@ -19,6 +19,11 @@ export interface EditorProps
   autoFocus?: boolean;
 }
 
+export interface ItextareaIncetance extends MutableRefObject<null> {
+  setTextareaValue?: Function;
+  textareaIncetance?: React.KeyboardEvent<HTMLTextAreaElement>;
+}
+
 export default function Editor(props: EditorProps) {
   const {
     prefixCls = "md-editor",
@@ -31,7 +36,7 @@ export default function Editor(props: EditorProps) {
   const [value, setValue] = useState(props.value || "");
 
   const textareaRef = useRef(null);
-  const textareaIncetance: any = useRef(null);
+  const textareaIncetance: ItextareaIncetance | null = useRef(null);
 
   const onTextareaChange = (newVal: string) => {
     setValue(newVal);
@@ -48,7 +53,7 @@ export default function Editor(props: EditorProps) {
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    hotKey(e);
+    hotKey(e, textareaIncetance.current);
   };
 
   useEffect(() => {

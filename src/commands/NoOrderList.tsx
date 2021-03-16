@@ -44,7 +44,7 @@ const NoOrderListSvg = () => {
 
 const execute = (textApi: ITextApi) => {
   const prefix = "- ";
-  const suffix = "\n";
+  const suffix = "";
   textApi.insertText({
     prefix,
     suffix,
