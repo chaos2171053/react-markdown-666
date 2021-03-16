@@ -5,9 +5,14 @@ export interface ITextApi {
 
 export default class TextApi implements ITextApi {
   textareaIncetance: HTMLTextAreaElement | null = null;
-  constructor(textareaRef: { instance?: HTMLTextAreaElement | null } | null) {
+  setTextareaValue: Function = () => {};
+  constructor(
+    textareaRef: { instance?: HTMLTextAreaElement | null } | null,
+    setTextareaValue: Function
+  ) {
     if (textareaRef && textareaRef.instance) {
       this.textareaIncetance = textareaRef.instance;
+      this.setTextareaValue = setTextareaValue;
     }
   }
   insertText({
@@ -29,6 +34,7 @@ export default class TextApi implements ITextApi {
     const end = textareaIncetance?.selectionEnd || 0;
     let newSelectionStart = 0;
     let newSelectionEnd = 0;
+    let newVal = "";
 
     if (!textareaIncetance) {
       return;
@@ -39,12 +45,13 @@ export default class TextApi implements ITextApi {
     }
 
     if (start === end) {
-      textareaIncetance.value =
+      newVal =
         value?.substring(0, start) +
         prefix +
         str +
         suffix +
         value?.substring(end, value.length);
+      this.setTextareaValue(newVal);
       newSelectionStart = start + prefix.length;
       newSelectionEnd = +str.length + prefix.length + end;
       textareaIncetance.focus();
@@ -53,12 +60,13 @@ export default class TextApi implements ITextApi {
       if (prefix === "- ") {
         this.handleNoOrderList();
       } else {
-        textareaIncetance.value =
+        newVal =
           value.substring(0, start) +
           prefix +
           value.substring(start, end) +
           suffix +
           value.substring(end, value.length);
+        this.setTextareaValue(newVal);
         newSelectionStart = start + prefix.length;
         newSelectionEnd = prefix.length + end;
         textareaIncetance.focus();
@@ -84,8 +92,9 @@ export default class TextApi implements ITextApi {
       return strLine;
     });
     newVal = newValArr.join("");
-    textareaIncetance.value =
-      value.substring(0, start) + newVal + value.substring(end);
+    this.setTextareaValue(
+      value.substring(0, start) + newVal + value.substring(end)
+    );
     textareaIncetance.focus();
     textareaIncetance.selectionStart = start + newVal.length;
   }

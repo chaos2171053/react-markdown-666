@@ -24,13 +24,11 @@ export default forwardRef(function Content(props: IContent, ref) {
     onKeyDownHandler = () => {},
     ...others
   } = props;
-  const [value, setValue] = useState(props.value);
 
   const textareaRef = useRef(null);
 
   const onContentValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newVal = e.target.value;
-    setValue(newVal);
     onValueChange && onValueChange(newVal);
   };
   useEffect(() => {
@@ -50,7 +48,7 @@ export default forwardRef(function Content(props: IContent, ref) {
         ref={textareaRef}
         onKeyDown={onKeyDownHandler}
         className={`${prefixCls}-input`}
-        value={value}
+        value={props.value}
         onChange={onContentValueChange}
         {...others}
       />

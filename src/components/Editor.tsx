@@ -53,7 +53,10 @@ export default function Editor(props: EditorProps) {
 
   useEffect(() => {
     if (textareaRef.current) {
-      (textareaIncetance.current as any) = new TextApi(textareaRef.current);
+      (textareaIncetance.current as any) = new TextApi(
+        textareaRef.current,
+        setValue
+      );
     }
     return () => {};
   }, []);
