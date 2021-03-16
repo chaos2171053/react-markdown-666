@@ -41,6 +41,7 @@
     "fs-extra": "^9.0.1",
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
+    "insert-text-at-cursor": "^0.3.0",
     "jest": "26.6.0",
     "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
@@ -160,6 +161,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.11",
+    "@types/insert-text-at-cursor": "^0.3.0",
     "@types/react-syntax-highlighter": "^13.5.0",
     "less": "^4.1.1"
   }
