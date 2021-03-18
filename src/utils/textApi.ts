@@ -5,15 +5,13 @@ export interface ITextApi {
 
 export default class TextApi implements ITextApi {
   textareaIncetance: HTMLTextAreaElement | null = null;
-  setTextareaValue: Function = () => {};
-  constructor(
-    textareaRef: { instance?: HTMLTextAreaElement | null } | null,
-    setTextareaValue: Function
-  ) {
+  constructor(textareaRef: { instance?: HTMLTextAreaElement | null } | null) {
     if (textareaRef && textareaRef.instance) {
       this.textareaIncetance = textareaRef.instance;
-      this.setTextareaValue = setTextareaValue;
     }
+  }
+  setTextareaValue(value: string) {
+    (this.textareaIncetance as HTMLTextAreaElement).value = value;
   }
   insertText({
     prefix = "",

@@ -32,10 +32,11 @@ export default function hotKey(
   // enter
   if (keycode === "Enter" || keycode === 13) {
     // insert “no order list”
-    if (/^-\s/.test(currentLineStr)) {
+    if (currentLineStr.startsWith("- ")) {
       stopPropagation(e);
       // Cannot invoke an object which is possibly 'undefined'
       (textareaIncetance as any).setTextareaValue(starVal + `\n- `);
+      return;
     }
   }
 }

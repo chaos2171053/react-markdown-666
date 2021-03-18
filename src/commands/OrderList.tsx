@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const OrderListSvg = () => {
@@ -19,10 +20,19 @@ const OrderListSvg = () => {
     </svg>
   );
 };
+const execute = (textApi: ITextApi) => {
+  const prefix = "1. ";
+  const suffix = "";
+  textApi.insertText({
+    prefix,
+    suffix,
+  });
+};
 
 export const OrderList: ICommand = {
   name: "OrderList",
   keyCommand: "OrderList",
   tips: "Order List",
   icon: OrderListSvg,
+  execute,
 };

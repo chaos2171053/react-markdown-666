@@ -1,5 +1,12 @@
-import React, { useState, useRef, useEffect, MutableRefObject } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  MutableRefObject,
+  useCallback,
+} from "react";
 import classnames from "classnames";
+import _ from "lodash";
 import Toolbar from "./Toolbar";
 import ContentTextarea from "./ContentTextarea";
 import ContentPreview from "./ContentPreview";
@@ -34,12 +41,17 @@ export default function Editor(props: EditorProps) {
     autoFocus = true,
   } = props;
   const [value, setValue] = useState(props.value || "");
+  const setTextareaValueDebounce = useCallback(
+    _.debounce((val) => setValue(val), 30),
+    []
+  );
 
   const textareaRef = useRef(null);
   const textareaIncetance: ItextareaIncetance | null = useRef(null);
 
   const onTextareaChange = (newVal: string) => {
-    setValue(newVal);
+    // TODO: setValue method makes componnet too slow
+    setTextareaValueDebounce(newVal);
     onChange && onChange(newVal);
   };
 
@@ -58,10 +70,7 @@ export default function Editor(props: EditorProps) {
 
   useEffect(() => {
     if (textareaRef.current) {
-      (textareaIncetance.current as any) = new TextApi(
-        textareaRef.current,
-        setValue
-      );
+      (textareaIncetance.current as any) = new TextApi(textareaRef.current);
     }
     return () => {};
   }, []);
@@ -77,7 +86,7 @@ export default function Editor(props: EditorProps) {
         <div className={`${prefixCls}-content`}>
           <ContentTextarea
             prefixCls={`${prefixCls}-textarea`}
-            value={value}
+            defaultValue={value}
             onKeyDown={onKeyDownHandler}
             onValueChange={onTextareaChange}
             ref={textareaRef}
