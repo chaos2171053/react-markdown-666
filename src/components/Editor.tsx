@@ -43,6 +43,7 @@ export default function Editor(props: EditorProps) {
     defaultValue,
   } = props;
   const [value, setValue] = useState(props.value || "");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setTextareaValueDebounce = useCallback(
     _.debounce((val) => setValue(val), 30),
     []
@@ -51,11 +52,14 @@ export default function Editor(props: EditorProps) {
   const textareaRef = useRef(null);
   const textareaIncetance: ItextareaIncetance | null = useRef(null);
 
-  const onTextareaChange = (newVal: string) => {
-    // TODO: The setValue method makes componnet too slow
-    setTextareaValueDebounce(newVal);
-    onChange && onChange(newVal);
-  };
+  const onTextareaChange = useCallback(
+    (newVal: string) => {
+      // TODO: The setValue method makes componnet too slow
+      setTextareaValueDebounce(newVal);
+      onChange && onChange(newVal);
+    },
+    [onChange, setTextareaValueDebounce]
+  );
 
   const clsStr = classnames(className, prefixCls);
   const onCommandClick = (command: ICommand) => {
@@ -74,11 +78,11 @@ export default function Editor(props: EditorProps) {
     if (textareaRef.current) {
       (textareaIncetance.current as any) = new TextApi(
         textareaRef.current,
-        setTextareaValueDebounce
+        onTextareaChange
       );
     }
     return () => {};
-  }, [setTextareaValueDebounce]);
+  }, [onTextareaChange]);
 
   return (
     <>

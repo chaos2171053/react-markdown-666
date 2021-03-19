@@ -55,7 +55,9 @@ export default class TextApi implements ITextApi {
       });
     } else {
       if (prefix === "- ") {
-        this.handleNoOrderList();
+        this.makeList(false);
+      } else if (prefix === "1. ") {
+        this.makeList(true);
       } else {
         newVal = `${
           value.substring(0, start) +
@@ -77,7 +79,7 @@ export default class TextApi implements ITextApi {
       }
     }
   }
-  handleNoOrderList() {
+  makeList(isOrder: boolean) {
     const textareaIncetance = this.textareaIncetance as HTMLTextAreaElement;
     const value = textareaIncetance?.value || "";
     const start = textareaIncetance?.selectionStart || 0;
@@ -87,7 +89,9 @@ export default class TextApi implements ITextApi {
     let newValArr = [];
     let newVal = "";
     newValArr = valArr.map((strLine, index) => {
-      strLine = `- ${strLine}${index === valArr.length - 1 ? "" : "\n"}`;
+      strLine = `${isOrder ? index + 1 + "." : "-"} ${strLine}${
+        index === valArr.length - 1 ? "" : "\n"
+      }`;
       return strLine;
     });
     newVal = newValArr.join("");
