@@ -44,13 +44,26 @@ const NoOrderListSvg = () => {
 
 const execute = (textApi: ITextApi) => {
   const prefix = "- ";
-  const suffix = "";
+
+  const value = textApi.getText();
   const { selectionStart, selectionEnd } = textApi.getTextSelection();
-  const selectVal = textApi.getTextBySelection({
-    selectionStart,
-    selectionEnd,
+  const valArr = value.slice(selectionStart, selectionEnd).split("\n");
+
+  let newValArr = [];
+  let newVal = "";
+  newValArr = valArr.map((strLine: string, index: number) => {
+    strLine = `${prefix} ${strLine}${index === valArr.length - 1 ? "" : "\n"}`;
+    return strLine;
   });
-  textApi.insertText(`${prefix}${selectVal}${suffix}`);
+  newVal = newValArr.join("");
+  textApi.insertText(newVal);
+  if (selectionStart === selectionEnd) {
+    setTimeout(() => {
+      textApi.setTextSelection({
+        start: selectionStart + 2,
+      });
+    });
+  }
 };
 
 export const NoOrderList: ICommand = {

@@ -21,14 +21,27 @@ const OrderListSvg = () => {
   );
 };
 const execute = (textApi: ITextApi) => {
-  const prefix = "1. ";
-  const suffix = "";
+  const value = textApi.getText();
   const { selectionStart, selectionEnd } = textApi.getTextSelection();
-  const selectVal = textApi.getTextBySelection({
-    selectionStart,
-    selectionEnd,
+  const valArr = value.slice(selectionStart, selectionEnd).split("\n");
+
+  let newValArr = [];
+  let newVal = "";
+  newValArr = valArr.map((strLine: string, index: number) => {
+    strLine = `${index + 1}. ${strLine}${
+      index === valArr.length - 1 ? "" : "\n"
+    }`;
+    return strLine;
   });
-  textApi.insertText(`${prefix}${selectVal}${suffix}`);
+  newVal = newValArr.join("");
+  textApi.insertText(newVal);
+  if (selectionStart === selectionEnd) {
+    setTimeout(() => {
+      textApi.setTextSelection({
+        start: selectionStart + 3,
+      });
+    });
+  }
 };
 
 export const OrderList: ICommand = {
