@@ -15,6 +15,16 @@ export default class TextApi implements ITextApi {
       this.setTextareaValue = setValue;
     }
   }
+  setTextSelection({ start, end }: { start?: number; end?: number }) {
+    const textareaIncetance = this.textareaIncetance;
+    if (typeof start === "number") {
+      (textareaIncetance as HTMLTextAreaElement).selectionStart = start;
+    }
+    if (typeof end === "number") {
+      (textareaIncetance as HTMLTextAreaElement).selectionEnd = end;
+    }
+  }
+  // TODO: split this method into different interface
   insertText({
     prefix = "",
     str = "",
@@ -37,7 +47,7 @@ export default class TextApi implements ITextApi {
     if (!textareaIncetance) {
       return;
     }
-
+    // TODO：refactor start、end、prefix、suffix，read the design pattern first
     if (start === end) {
       newVal = `${
         value?.substring(0, start) +
@@ -48,11 +58,14 @@ export default class TextApi implements ITextApi {
       }`;
       this.setTextareaValue(newVal);
       newSelectionStart = start + prefix.length;
-      newSelectionEnd = +str.length + prefix.length + end;
-      textareaIncetance.focus();
+      newSelectionEnd = start + str.length + suffix.length + end;
       setTimeout(() => {
-        textareaIncetance.setSelectionRange(newSelectionStart, newSelectionEnd);
-      });
+        textareaIncetance.focus();
+        this.setTextSelection({
+          start: newSelectionStart,
+          end: newSelectionEnd,
+        });
+      }, 100);
     } else {
       if (prefix === "- ") {
         this.makeList(false);
@@ -71,11 +84,11 @@ export default class TextApi implements ITextApi {
         newSelectionEnd = prefix.length + end;
         textareaIncetance.focus();
         setTimeout(() => {
-          textareaIncetance.setSelectionRange(
-            newSelectionStart,
-            newSelectionEnd
-          );
-        });
+          this.setTextSelection({
+            start: newSelectionStart,
+            end: newSelectionEnd,
+          });
+        }, 100);
       }
     }
   }
@@ -99,6 +112,6 @@ export default class TextApi implements ITextApi {
       value.substring(0, start) + newVal + value.substring(end)
     );
     textareaIncetance.focus();
-    textareaIncetance.selectionStart = start + newVal.length;
+    //this.setTextSelection({ start: start + newVal.length });
   }
 }
