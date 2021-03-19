@@ -1,5 +1,4 @@
 import React, {
-  useState,
   useRef,
   useEffect,
   forwardRef,
@@ -51,7 +50,8 @@ export default forwardRef(function Content(props: IContent, ref) {
         ref={textareaRef}
         onKeyDown={onKeyDownHandler}
         className={`${prefixCls}-input`}
-        defaultValue={props.value}
+        defaultValue={defaultValue}
+        value={value}
         onChange={onContentValueChange}
         {...others}
       />

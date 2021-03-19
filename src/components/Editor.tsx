@@ -23,6 +23,7 @@ export interface EditorProps
   height?: number;
   onChange?: Function;
   value?: string;
+  defaultValue?: string;
   autoFocus?: boolean;
 }
 
@@ -39,6 +40,7 @@ export default function Editor(props: EditorProps) {
     height = 500,
     onChange,
     autoFocus = true,
+    defaultValue,
   } = props;
   const [value, setValue] = useState(props.value || "");
   const setTextareaValueDebounce = useCallback(
@@ -50,7 +52,7 @@ export default function Editor(props: EditorProps) {
   const textareaIncetance: ItextareaIncetance | null = useRef(null);
 
   const onTextareaChange = (newVal: string) => {
-    // TODO: setValue method makes componnet too slow
+    // TODO: The setValue method makes componnet too slow
     setTextareaValueDebounce(newVal);
     onChange && onChange(newVal);
   };
@@ -70,10 +72,13 @@ export default function Editor(props: EditorProps) {
 
   useEffect(() => {
     if (textareaRef.current) {
-      (textareaIncetance.current as any) = new TextApi(textareaRef.current);
+      (textareaIncetance.current as any) = new TextApi(
+        textareaRef.current,
+        setTextareaValueDebounce
+      );
     }
     return () => {};
-  }, []);
+  }, [setTextareaValueDebounce]);
 
   return (
     <>
@@ -86,11 +91,12 @@ export default function Editor(props: EditorProps) {
         <div className={`${prefixCls}-content`}>
           <ContentTextarea
             prefixCls={`${prefixCls}-textarea`}
-            defaultValue={value}
+            value={value}
             onKeyDown={onKeyDownHandler}
             onValueChange={onTextareaChange}
             ref={textareaRef}
             autoFocus={autoFocus}
+            defaultValue={defaultValue}
           />
           <ContentPreview className={`${prefixCls}-preview`} value={value} />
         </div>
