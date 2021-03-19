@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ITextApi } from "../utils/textApi";
 import { ICommand } from "./";
 
 const FullScreenSvg = () => {
@@ -20,9 +21,27 @@ const FullScreenSvg = () => {
   );
 };
 
+function launchFullscreen(element: any) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
+const execute = (textApi: ITextApi) => {
+  const textareaIncetance = document.querySelector(".md-editor-666");
+  launchFullscreen(textareaIncetance);
+};
+
 export const FullScreen: ICommand = {
   name: "FullScreen",
   keyCommand: "FullScreen",
   tips: "Full Screen",
   icon: FullScreenSvg,
+  execute,
 };

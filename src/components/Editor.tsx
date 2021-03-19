@@ -33,7 +33,7 @@ export interface ItextareaIncetance extends MutableRefObject<null> {
 
 export default function Editor(props: EditorProps) {
   const {
-    prefixCls = "md-editor",
+    prefixCls = "md-editor-666",
     className,
     commands = getCommands(),
     height = 500,
