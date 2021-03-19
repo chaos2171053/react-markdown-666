@@ -21,12 +21,37 @@ const HorizontalLineSvg = () => {
 };
 
 const execute = (textApi: ITextApi) => {
-  const prefix = "\n***\n";
-  const suffix = "";
-  textApi.insertText({
-    prefix,
-    suffix,
+  let prefix = "\n***\n";
+  let suffix = "";
+  const { selectionStart, selectionEnd } = textApi.getTextSelection();
+  const selectVal = textApi.getTextBySelection({
+    selectionStart,
+    selectionEnd,
   });
+
+  if (selectionStart !== selectionEnd) {
+    prefix = "";
+    suffix = "\n***\n";
+  }
+
+  const newVal = `${prefix}${selectVal}${suffix}`;
+
+  textApi.insertText(newVal);
+
+  if (selectionStart === selectionEnd) {
+    setTimeout(() => {
+      textApi.setTextSelection({
+        start: selectionStart + prefix.length,
+        end: selectionStart + newVal.length - suffix.length,
+      });
+    });
+  } else {
+    setTimeout(() => {
+      textApi.setTextSelection({
+        start: selectionStart + prefix.length + newVal.length + suffix.length,
+      });
+    });
+  }
 };
 
 export const HorizontalLine: ICommand = {

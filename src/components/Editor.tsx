@@ -6,7 +6,6 @@ import React, {
   useCallback,
 } from "react";
 import classnames from "classnames";
-import _ from "lodash";
 import Toolbar from "./Toolbar";
 import ContentTextarea from "./ContentTextarea";
 import ContentPreview from "./ContentPreview";
@@ -44,10 +43,6 @@ export default function Editor(props: EditorProps) {
   } = props;
   const [value, setValue] = useState(props.value || "");
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const setTextareaValueDebounce = useCallback(
-    _.debounce((val) => setValue(val), 30),
-    []
-  );
 
   const textareaRef = useRef(null);
   const textareaIncetance: ItextareaIncetance | null = useRef(null);
@@ -55,10 +50,10 @@ export default function Editor(props: EditorProps) {
   const onTextareaChange = useCallback(
     (newVal: string) => {
       // TODO: The setValue method makes componnet too slow
-      setTextareaValueDebounce(newVal);
+      setValue(newVal);
       onChange && onChange(newVal);
     },
-    [onChange, setTextareaValueDebounce]
+    [onChange]
   );
 
   const clsStr = classnames(className, prefixCls);
@@ -78,11 +73,11 @@ export default function Editor(props: EditorProps) {
     if (textareaRef.current) {
       (textareaIncetance.current as any) = new TextApi(
         textareaRef.current,
-        onTextareaChange
+        setValue
       );
     }
     return () => {};
-  }, [onTextareaChange]);
+  }, []);
 
   return (
     <>

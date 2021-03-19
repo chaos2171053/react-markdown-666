@@ -1,6 +1,10 @@
 export interface ITextApi {
   textareaIncetance: HTMLTextAreaElement | null;
   insertText: Function;
+  setTextSelection: Function;
+  getTextSelection: Function;
+  makeList: Function;
+  getTextBySelection: Function;
 }
 
 export default class TextApi implements ITextApi {
@@ -17,6 +21,7 @@ export default class TextApi implements ITextApi {
   }
   setTextSelection({ start, end }: { start?: number; end?: number }) {
     const textareaIncetance = this.textareaIncetance;
+    textareaIncetance?.focus();
     if (typeof start === "number") {
       (textareaIncetance as HTMLTextAreaElement).selectionStart = start;
     }
@@ -24,8 +29,59 @@ export default class TextApi implements ITextApi {
       (textareaIncetance as HTMLTextAreaElement).selectionEnd = end;
     }
   }
+  insertText(insertValue: string) {
+    const { selectionStart, selectionEnd } = this.getTextSelection();
+    const preValue = this.textareaIncetance?.value || "";
+    const newVal = `${
+      preValue?.substring(0, selectionStart) +
+      insertValue +
+      preValue?.substring(selectionEnd as number)
+    }`;
+    this.setTextareaValue(newVal);
+  }
+
+  getTextSelection() {
+    return {
+      selectionStart: this.textareaIncetance?.selectionStart,
+      selectionEnd: this.textareaIncetance?.selectionEnd,
+    };
+  }
+
+  getTextBySelection({
+    selectionStart = 0,
+    selectionEnd = 0,
+  }: {
+    selectionStart?: number;
+    selectionEnd?: number;
+  }) {
+    const textareaIncetance = this.textareaIncetance;
+    const value = textareaIncetance?.value || "";
+    if (selectionStart !== undefined && typeof selectionStart !== "number") {
+      throw new Error("selectionStart must be a number type");
+    }
+    if (selectionEnd !== undefined && typeof selectionEnd !== "number") {
+      throw new Error("end must be a number type");
+    }
+    return value.substring(selectionStart, selectionEnd);
+  }
+
   // TODO: split this method into different interface
-  insertText({
+  // insertText({
+  //   prefix = "",
+  //   str = "",
+  //   suffix = "",
+  // }: {
+  //   prefix?: string;
+  //   suffix?: string;
+  //   str?: string;
+  // }) {
+  //   this.oldInsertText({
+  //     prefix,
+  //     str,
+  //     suffix,
+  //   });
+  // }
+  oldInsertText({
     prefix = "",
     str = "",
     suffix = "",
@@ -33,8 +89,6 @@ export default class TextApi implements ITextApi {
     prefix?: string;
     suffix?: string;
     str?: string;
-    afterInsert?: Function;
-    beforeInsert?: Function;
   }) {
     const textareaIncetance = this.textareaIncetance;
     const value = textareaIncetance?.value || "";

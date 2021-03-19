@@ -45,10 +45,12 @@ const NoOrderListSvg = () => {
 const execute = (textApi: ITextApi) => {
   const prefix = "- ";
   const suffix = "";
-  textApi.insertText({
-    prefix,
-    suffix,
+  const { selectionStart, selectionEnd } = textApi.getTextSelection();
+  const selectVal = textApi.getTextBySelection({
+    selectionStart,
+    selectionEnd,
   });
+  textApi.insertText(`${prefix}${selectVal}${suffix}`);
 };
 
 export const NoOrderList: ICommand = {

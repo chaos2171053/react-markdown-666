@@ -23,10 +23,12 @@ const OrderListSvg = () => {
 const execute = (textApi: ITextApi) => {
   const prefix = "1. ";
   const suffix = "";
-  textApi.insertText({
-    prefix,
-    suffix,
+  const { selectionStart, selectionEnd } = textApi.getTextSelection();
+  const selectVal = textApi.getTextBySelection({
+    selectionStart,
+    selectionEnd,
   });
+  textApi.insertText(`${prefix}${selectVal}${suffix}`);
 };
 
 export const OrderList: ICommand = {

@@ -25,12 +25,23 @@ const Heading3Svg = () => {
 const execute = (textApi: ITextApi) => {
   const prefix = "### ";
   const suffix = "";
-  const str = commandName;
-  textApi.insertText({
-    prefix,
-    suffix,
-    str,
+  const { selectionStart, selectionEnd } = textApi.getTextSelection();
+  const selectVal = textApi.getTextBySelection({
+    selectionStart,
+    selectionEnd,
   });
+  const newVal = `${prefix}${selectVal}${suffix}`;
+
+  textApi.insertText(newVal);
+
+  if (selectionStart === selectionEnd) {
+    setTimeout(() => {
+      textApi.setTextSelection({
+        start: selectionStart + prefix.length,
+        end: selectionStart + newVal.length - suffix.length,
+      });
+    });
+  }
 };
 export const Heading3: ICommand = {
   name: commandName,

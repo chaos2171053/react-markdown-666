@@ -28,11 +28,28 @@ const ImageBlockSvg = () => {
 };
 
 const execute = (textApi: ITextApi) => {
-  const prefix = "![](https://example.com/image-url.png)";
-  const suffix = "";
-  textApi.insertText({
-    prefix,
-    suffix,
+  let prefix = "![](https://example.com/image-url.png)";
+  const { selectionStart, selectionEnd } = textApi.getTextSelection();
+  let selectVal = textApi.getTextBySelection({
+    selectionStart,
+    selectionEnd,
+  });
+  let newVal = "";
+
+  if (selectionStart === selectionEnd) {
+    newVal = prefix;
+  } else {
+    prefix = `![](${selectVal})`;
+    newVal = prefix;
+  }
+
+  textApi.insertText(newVal);
+
+  setTimeout(() => {
+    textApi.setTextSelection({
+      start: selectionStart + 4,
+      end: selectionStart + prefix.length - 1,
+    });
   });
 };
 

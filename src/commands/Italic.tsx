@@ -25,10 +25,23 @@ const ItalicSvg = () => {
 const execute = (textApi: ITextApi) => {
   const prefix = "*";
   const suffix = "*";
-  textApi.insertText({
-    prefix,
-    suffix,
+  const { selectionStart, selectionEnd } = textApi.getTextSelection();
+  const selectVal = textApi.getTextBySelection({
+    selectionStart,
+    selectionEnd,
   });
+  const newVal = `${prefix}${selectVal}${suffix}`;
+
+  textApi.insertText(newVal);
+
+  if (selectionStart === selectionEnd) {
+    setTimeout(() => {
+      textApi.setTextSelection({
+        start: selectionStart + prefix.length,
+        end: selectionStart + newVal.length - suffix.length,
+      });
+    });
+  }
 };
 
 export const Italic: ICommand = {
