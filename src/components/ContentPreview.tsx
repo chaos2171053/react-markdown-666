@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -26,15 +26,20 @@ function LinkRenderer(props: any) {
   );
 }
 
-export default function ContentPreview(props: any) {
+export default forwardRef(function ContentPreview(props: any, ref) {
   const { value, ...others } = props;
+  const previewRef = useRef(null);
+  useImperativeHandle(ref, () => ({
+    instance: previewRef.current,
+  }));
   return (
     <div {...others}>
       <ReactMarkdown
+        ref={previewRef}
         plugins={[gfm]}
         children={value || ""}
         renderers={{ code: CodeBlockRenderer, link: LinkRenderer }}
       />
     </div>
   );
-}
+});

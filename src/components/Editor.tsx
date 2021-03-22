@@ -45,6 +45,8 @@ export default function Editor(props: EditorProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const textareaRef = useRef(null);
+  const previewRef = useRef(null);
+  const leftScroll = useRef(false);
   const textareaIncetance: ItextareaIncetance | null = useRef(null);
 
   const onTextareaChange = useCallback(
@@ -61,12 +63,30 @@ export default function Editor(props: EditorProps) {
     let instance = null;
     if (textareaIncetance && textareaIncetance.current) {
       instance = textareaIncetance?.current;
+      instance && command.execute && command.execute(instance);
     }
-    instance && command.execute && command.execute(instance);
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     hotKey(e, textareaIncetance.current);
+  };
+
+  const onContentTextareaScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+    const scrollTop = (e.target as HTMLElement).scrollTop;
+    const previewInstance = ((previewRef.current as unknown) as {
+      instance: HTMLElement;
+    }).instance as HTMLElement;
+    const textareaRef = ((previewRef.current as unknown) as {
+      instance: HTMLElement;
+    }).instance as HTMLElement;
+
+    // content scroll
+    if (leftScroll.current && previewRef.current) {
+      previewInstance.scrollTop = scrollTop;
+    } else {
+      // preview scroll
+      textareaRef.scrollTop = previewInstance.scrollTop;
+    }
   };
 
   useEffect(() => {
@@ -91,13 +111,21 @@ export default function Editor(props: EditorProps) {
           <ContentTextarea
             prefixCls={`${prefixCls}-textarea`}
             value={value}
+            onScroll={onContentTextareaScroll}
             onKeyDown={onKeyDownHandler}
             onValueChange={onTextareaChange}
             ref={textareaRef}
             autoFocus={autoFocus}
             defaultValue={defaultValue}
+            onMouseOver={() => (leftScroll.current = true)}
+            onMouseLeave={() => (leftScroll.current = false)}
           />
-          <ContentPreview className={`${prefixCls}-preview`} value={value} />
+          <ContentPreview
+            className={`${prefixCls}-preview`}
+            value={value}
+            ref={previewRef}
+            onScroll={onContentTextareaScroll}
+          />
         </div>
       </div>
     </>

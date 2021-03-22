@@ -6,13 +6,14 @@ import React, {
 } from "react";
 
 export interface IContent
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "onScroll"> {
   value?: string;
   onValueChange?: Function;
   prefixCls: string;
   // ref: React.MutableRefObject<null>;
   autoFocus: boolean;
   defaultValue?: string;
+  onScroll?: (e: React.UIEvent<HTMLTextAreaElement>) => void;
   onKeyDownHandler?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => {};
 }
 
@@ -24,6 +25,7 @@ export default forwardRef(function Content(props: IContent, ref) {
     onKeyDownHandler = () => {},
     defaultValue,
     value,
+    onScroll,
     ...others
   } = props;
 
@@ -47,6 +49,7 @@ export default forwardRef(function Content(props: IContent, ref) {
   return (
     <div className={prefixCls}>
       <textarea
+        onScroll={onScroll}
         ref={textareaRef}
         onKeyDown={onKeyDownHandler}
         className={`${prefixCls}-input`}
