@@ -31,6 +31,14 @@
 //   color: #333;
 //   background: #f8f8f8;
 // }
-pre {
-  background-color: #f1f1f1 !important;
+
+@import '../styles/variables.less';
+.@{pre-fix-cls}{
+  &-preview-pannel {
+    overflow: auto;
+    height: 100%;
+  }
+  pre {
+    background-color: #f1f1f1 !important;
+  }
 }

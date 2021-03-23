@@ -27,7 +27,7 @@ function LinkRenderer(props: any) {
 }
 
 export default forwardRef(function ContentPreview(props: any, ref) {
-  const { value, ...others } = props;
+  const { value, prefixCls, ...others } = props;
   const previewRef = useRef(null);
   useImperativeHandle(ref, () => ({
     instance: previewRef.current,
@@ -35,7 +35,7 @@ export default forwardRef(function ContentPreview(props: any, ref) {
   return (
     <div {...others}>
       <ReactMarkdown
-        ref={previewRef}
+        className={`${prefixCls}-preview-pannel`}
         plugins={[gfm]}
         children={value || ""}
         renderers={{ code: CodeBlockRenderer, link: LinkRenderer }}

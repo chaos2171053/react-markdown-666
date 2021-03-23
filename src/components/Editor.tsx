@@ -45,7 +45,6 @@ export default function Editor(props: EditorProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const textareaRef = useRef(null);
-  const previewRef = useRef(null);
   const leftScroll = useRef(false);
   const textareaIncetance: ItextareaIncetance | null = useRef(null);
 
@@ -73,19 +72,19 @@ export default function Editor(props: EditorProps) {
 
   const onContentTextareaScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
     const scrollTop = (e.target as HTMLElement).scrollTop;
-    const previewInstance = ((previewRef.current as unknown) as {
-      instance: HTMLElement;
-    }).instance as HTMLElement;
-    const textareaRef = ((previewRef.current as unknown) as {
-      instance: HTMLElement;
-    }).instance as HTMLElement;
-
+    const previewInstance = document.querySelector(
+      `.${prefixCls}-preview-pannel`
+    );
+    const textareaRef = ((textareaIncetance.current as unknown) as {
+      textareaIncetance: HTMLElement;
+    }).textareaIncetance as HTMLElement;
     // content scroll
-    if (leftScroll.current && previewRef.current) {
+    if (leftScroll.current && previewInstance) {
       previewInstance.scrollTop = scrollTop;
-    } else {
+      console.log("previewInstance: ", previewInstance);
+    } else if (!leftScroll.current && previewInstance) {
       // preview scroll
-      textareaRef.scrollTop = previewInstance.scrollTop;
+      textareaRef.scrollTop = scrollTop;
     }
   };
 
@@ -121,9 +120,9 @@ export default function Editor(props: EditorProps) {
             onMouseLeave={() => (leftScroll.current = false)}
           />
           <ContentPreview
+            prefixCls={prefixCls}
             className={`${prefixCls}-preview`}
             value={value}
-            ref={previewRef}
             onScroll={onContentTextareaScroll}
           />
         </div>
