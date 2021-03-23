@@ -1,4 +1,9 @@
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -27,11 +32,20 @@ function LinkRenderer(props: any) {
 }
 
 export default forwardRef(function ContentPreview(props: any, ref) {
-  const { value, prefixCls, ...others } = props;
+  const { value, prefixCls, onScroll, ...others } = props;
   const previewRef = useRef(null);
   useImperativeHandle(ref, () => ({
     instance: previewRef.current,
   }));
+  useEffect(() => {
+    document
+      .querySelector(`.${prefixCls}-preview-pannel`)
+      ?.addEventListener("scroll", (e) => {
+        onScroll && onScroll(e);
+      });
+    return () => {};
+  }, []);
+
   return (
     <div {...others}>
       <ReactMarkdown

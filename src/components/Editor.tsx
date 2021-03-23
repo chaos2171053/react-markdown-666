@@ -71,6 +71,9 @@ export default function Editor(props: EditorProps) {
   };
 
   const onContentTextareaScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+    if (!e) {
+      return;
+    }
     const scrollTop = (e.target as HTMLElement).scrollTop;
     const previewInstance = document.querySelector(
       `.${prefixCls}-preview-pannel`
@@ -78,13 +81,17 @@ export default function Editor(props: EditorProps) {
     const textareaRef = ((textareaIncetance.current as unknown) as {
       textareaIncetance: HTMLElement;
     }).textareaIncetance as HTMLElement;
-    // content scroll
-    if (leftScroll.current && previewInstance) {
-      previewInstance.scrollTop = scrollTop;
-      console.log("previewInstance: ", previewInstance);
-    } else if (!leftScroll.current && previewInstance) {
-      // preview scroll
-      textareaRef.scrollTop = scrollTop;
+    if (previewInstance) {
+      const scale =
+        (textareaRef.scrollHeight - textareaRef.offsetHeight) /
+        (previewInstance.scrollHeight - (previewInstance as any).offsetHeight);
+      // content scroll
+      if (leftScroll.current && previewInstance) {
+        previewInstance.scrollTop = scrollTop / scale;
+      } else if (!leftScroll.current && previewInstance) {
+        // preview scroll
+        textareaRef.scrollTop = scrollTop * scale;
+      }
     }
   };
 
