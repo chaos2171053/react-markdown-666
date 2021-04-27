@@ -44,7 +44,7 @@ export default forwardRef(function ContentPreview(props: any, ref) {
         onScroll && onScroll(e);
       });
     return () => {};
-  }, []);
+  }, [onScroll, prefixCls]);
 
   return (
     <div {...others}>
